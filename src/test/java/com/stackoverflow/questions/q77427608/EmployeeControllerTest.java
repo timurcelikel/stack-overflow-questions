@@ -25,73 +25,77 @@ class EmployeeControllerTest {
 	ObjectMapper objectMapper;
 
 	@Test
-	void testEmployeeAddressPersist() throws JsonProcessingException {
+	void test_employee_id_should_persist_with_address() throws JsonProcessingException {
 
 		List<Employee> employees = getEmployees();
 
 		final ResponseEntity<List<Employee>> responseEmployees =
-				employeeController.createEmployees(employees);
+			employeeController.createEmployees(employees);
 
 		List<Employee> savedEmployees = responseEmployees.getBody();
 
 		assertThat(savedEmployees).hasSize(2);
+
+		// Resolved issue with employee explicitly saved with address
 		assertThat(savedEmployees.get(0).getAddresses().get(0).getEmployee()).isNotNull();
 	}
 
 	@Test
-	void testEmployeeAddressBrokenBidirectionalPersist() throws JsonProcessingException {
+	void test_employee_id_should_NOT_persist_with_address() throws JsonProcessingException {
 
 		List<Employee> employees = getEmployees();
 
 		final ResponseEntity<List<Employee>> responseEmployees =
-				employeeController.createEmployeesBrokenBiDirectionalSync(employees);
+			employeeController.createEmployeesBrokenBiDirectionalSync(employees);
 
 		List<Employee> savedEmployees = responseEmployees.getBody();
 
 		assertThat(savedEmployees).hasSize(2);
+
+		// Per Stack Overflow question, the Employee id is not persisted in the Address table
 		assertThat(savedEmployees.get(0).getAddresses().get(0).getEmployee()).isNull();
 	}
 
 	private List<Employee> getEmployees() throws JsonProcessingException {
 
 		String employeesJson =
-				"""
-							[{
-								"name": "test-user433242",
-								"salary": "94457020",
-								"position": "developer-244332",
-									"addresses": [
-										{        \s
-										   "street": "Ne22w st 444331",
-											"city": "Ne22w york city 443321",
-										   "state": "N22ew york state 43321"
-										  \s
-										 },
-										 {        \s
-										   "street": "texas st 211332",
-										   "city": "texas city 22332",
-										   "state": "texas state 23332"  \s
-										 }
-								]
-							},
-							{
-								"name": "test-user2133323",
-								"salary": "94777030",
-								"position": "developer33-21332",
-									"addresses": [
-										{        \s
-										   "street": "New3 st 211332",
-										   "city": "New york city 22332",
-										   "state": "Ne33w york state 23332"  \s
-										 },
-													 {        \s
-										   "street": "buffaol st 211332",
-										   "city": "buffalo city 22332",
-										   "state": "buffalo state 23332"  \s
-										 }
-								]
-							}]
-						""";
+			"""
+					[{
+						"name": "test-user433242",
+						"salary": "94457020",
+						"position": "developer-244332",
+							"addresses": [
+								{        \s
+								   "street": "Ne22w st 444331",
+									"city": "Ne22w york city 443321",
+								   "state": "N22ew york state 43321"
+								  \s
+								 },
+								 {        \s
+								   "street": "texas st 211332",
+								   "city": "texas city 22332",
+								   "state": "texas state 23332"  \s
+								 }
+						]
+					},
+					{
+						"name": "test-user2133323",
+						"salary": "94777030",
+						"position": "developer33-21332",
+							"addresses": [
+								{        \s
+								   "street": "New3 st 211332",
+								   "city": "New york city 22332",
+								   "state": "Ne33w york state 23332"  \s
+								 },
+											 {        \s
+								   "street": "buffaol st 211332",
+								   "city": "buffalo city 22332",
+								   "state": "buffalo state 23332"  \s
+								 }
+						]
+					}]
+				""";
 
 		return Arrays.asList(objectMapper.readValue(employeesJson, Employee[].class));
 	}
