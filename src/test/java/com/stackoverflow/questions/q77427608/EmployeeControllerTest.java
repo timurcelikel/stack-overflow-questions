@@ -56,41 +56,41 @@ class EmployeeControllerTest {
 
 		String employeesJson =
 				"""
-						[{
-						    "name": "test-user433242",
-						    "salary": "94457020",
-						    "position": "developer-244332",
-						        "addresses": [
-						            {        \s
-						               "street": "Ne22w st 444331",
-						                "city": "Ne22w york city 443321",
-						               "state": "N22ew york state 43321"
-						              \s
-						             },
-						             {        \s
-						               "street": "texas st 211332",
-						               "city": "texas city 22332",
-						               "state": "texas state 23332"  \s
-						             }
-						    ]
-						},
-						{
-						    "name": "test-user2133323",
-						    "salary": "94777030",
-						    "position": "developer33-21332",
-						        "addresses": [
-						            {        \s
-						               "street": "New3 st 211332",
-						               "city": "New york city 22332",
-						               "state": "Ne33w york state 23332"  \s
-						             },
-						                         {        \s
-						               "street": "buffaol st 211332",
-						               "city": "buffalo city 22332",
-						               "state": "buffalo state 23332"  \s
-						             }
-						    ]
-						}]
+							[{
+								"name": "test-user433242",
+								"salary": "94457020",
+								"position": "developer-244332",
+									"addresses": [
+										{        \s
+										   "street": "Ne22w st 444331",
+											"city": "Ne22w york city 443321",
+										   "state": "N22ew york state 43321"
+										  \s
+										 },
+										 {        \s
+										   "street": "texas st 211332",
+										   "city": "texas city 22332",
+										   "state": "texas state 23332"  \s
+										 }
+								]
+							},
+							{
+								"name": "test-user2133323",
+								"salary": "94777030",
+								"position": "developer33-21332",
+									"addresses": [
+										{        \s
+										   "street": "New3 st 211332",
+										   "city": "New york city 22332",
+										   "state": "Ne33w york state 23332"  \s
+										 },
+													 {        \s
+										   "street": "buffaol st 211332",
+										   "city": "buffalo city 22332",
+										   "state": "buffalo state 23332"  \s
+										 }
+								]
+							}]
 						""";
 
 		return Arrays.asList(objectMapper.readValue(employeesJson, Employee[].class));
