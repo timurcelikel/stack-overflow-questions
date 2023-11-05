@@ -38,6 +38,20 @@ class EmployeeControllerTest {
 		assertThat(savedEmployees.get(0).getAddresses().get(0).getEmployee()).isNotNull();
 	}
 
+	@Test
+	void testEmployeeAddressBrokenBidirectionalPersist() throws JsonProcessingException {
+
+		List<Employee> employees = getEmployees();
+
+		final ResponseEntity<List<Employee>> responseEmployees =
+				employeeController.createEmployeesBrokenBiDirectionalSync(employees);
+
+		List<Employee> savedEmployees = responseEmployees.getBody();
+
+		assertThat(savedEmployees).hasSize(2);
+		assertThat(savedEmployees.get(0).getAddresses().get(0).getEmployee()).isNull();
+	}
+
 	private List<Employee> getEmployees() throws JsonProcessingException {
 
 		String employeesJson =

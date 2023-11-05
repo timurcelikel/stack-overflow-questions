@@ -34,4 +34,14 @@ public class EmployeeController {
 		return new ResponseEntity<>(newUsers, HttpStatus.OK);
 	}
 
+	@PostMapping("employeesBroken")
+	public ResponseEntity<List<Employee>> createEmployeesBrokenBiDirectionalSync(@RequestBody List<Employee> employee) {
+		List<Employee> newUsers = new ArrayList<>();
+		for (Employee emp : employee) {
+			Employee newUser = employeeRepository.save(emp);
+			newUsers.add(newUser);
+		}
+
+		return new ResponseEntity<>(newUsers, HttpStatus.OK);
+	}
 }
